@@ -1,6 +1,6 @@
 Name:           babeltrace
 Version:        1.0.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        MIT and GPLv2
 URL:            http://www.efficios.com/babeltrace
 Source0:        http://www.efficios.com/files/%{name}/%{name}-%{version}.tar.bz2
@@ -76,6 +76,9 @@ rm -vf %{buildroot}%{_libdir}/*.la
 %{_libdir}/*.so
 
 %changelog
+* Wed Feb 13 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.2-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
 * Fri Jan 18 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 1.0.2-1
 - New upstream release
 
