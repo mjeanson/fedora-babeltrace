@@ -1,5 +1,5 @@
 Name:           babeltrace
-Version:        1.0.3
+Version:        1.1.0
 Release:        1%{?dist}
 License:        MIT and GPLv2
 URL:            http://www.efficios.com/babeltrace
@@ -77,6 +77,10 @@ rm -vf %{buildroot}%{_libdir}/*.la
 %{_libdir}/pkgconfig/babeltrace.pc
 
 %changelog
+* Tue May 28 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 1.1.0-1
+- New upstream release
+- Patch babeltrace.pc to not depends on popt.pc, as it does not exist in Fedora
+
 * Tue Feb 26 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 1.0.3-1
 - New upstream release
 - Add pkg-config file to devel package (#913895)
