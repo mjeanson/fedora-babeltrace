@@ -8,6 +8,8 @@ Group:          Development/Tools
 Summary:        Trace Viewer and Converter, mainly for the Common Trace Format
 BuildRequires:  pkgconfig bison flex glib2-devel popt-devel libuuid-devel libtool
 Requires:       lib%{name}%{?_isa} = %{version}-%{release}
+# The fedora popt package does not include the pkg-config file
+Patch0: 	babeltrace-1.1.0-nopoptpc.patch 
 
 %description
 This project provides trace read and write libraries, as well as a trace
@@ -42,6 +44,7 @@ to/from another trace format.
 
 %prep
 %setup -q -n %{name}-%{version}
+%patch0 -p1
 
 %build
 #Re-run libtoolize and autoreconf to remove rpath
