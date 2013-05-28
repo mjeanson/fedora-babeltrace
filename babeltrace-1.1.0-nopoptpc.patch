@@ -1,0 +1,12 @@
+diff -up babeltrace-1.1.0/babeltrace.pc.in.orig babeltrace-1.1.0/babeltrace.pc.in
+--- babeltrace-1.1.0/babeltrace.pc.in.orig	2013-05-28 15:13:42.257000000 -0400
++++ babeltrace-1.1.0/babeltrace.pc.in	2013-05-28 15:13:49.529000000 -0400
+@@ -8,7 +8,7 @@ Description: libbabeltrace provides a re
+ Common Trace Format (CTF).
+ Version: @PACKAGE_VERSION@
+ Requires:
+-Requires.private: uuid popt
++Requires.private: uuid
+ Libs: -L${libdir} -lbabeltrace -lbabeltrace-ctf
+ Cflags: -I${includedir} 
+ 
