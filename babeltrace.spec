@@ -1,6 +1,6 @@
 Name:           babeltrace
 Version:        1.1.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        MIT and GPLv2
 URL:            http://www.efficios.com/babeltrace
 Source0:        http://www.efficios.com/files/%{name}/%{name}-%{version}.tar.bz2
@@ -50,7 +50,7 @@ to/from another trace format.
 #Re-run libtoolize and autoreconf to remove rpath
 libtoolize --force --copy
 autoreconf -v --install --force
-%configure --docdir=%{_docdir}/%{name}-%{version} --disable-static
+%configure --disable-static
 
 make %{?_smp_mflags} V=1
 
@@ -80,6 +80,9 @@ rm -vf %{buildroot}%{_libdir}/*.la
 %{_libdir}/pkgconfig/babeltrace.pc
 
 %changelog
+* Mon Aug 05 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 1.1.1-3
+- Remove reference to versionned docdir (#992011)
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
