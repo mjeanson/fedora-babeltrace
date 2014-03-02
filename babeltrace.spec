@@ -1,6 +1,6 @@
 Name:           babeltrace
-Version:        1.1.1
-Release:        3%{?dist}
+Version:        1.2.0
+Release:        1%{?dist}
 License:        MIT and GPLv2
 URL:            http://www.efficios.com/babeltrace
 Source0:        http://www.efficios.com/files/%{name}/%{name}-%{version}.tar.bz2
@@ -8,8 +8,6 @@ Group:          Development/Tools
 Summary:        Trace Viewer and Converter, mainly for the Common Trace Format
 BuildRequires:  pkgconfig bison flex glib2-devel popt-devel libuuid-devel libtool
 Requires:       lib%{name}%{?_isa} = %{version}-%{release}
-# The fedora popt package does not include the pkg-config file
-Patch0: 	babeltrace-1.1.0-nopoptpc.patch 
 
 %description
 This project provides trace read and write libraries, as well as a trace
@@ -44,7 +42,6 @@ to/from another trace format.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1
 
 %build
 #Re-run libtoolize and autoreconf to remove rpath
@@ -78,8 +75,14 @@ rm -vf %{buildroot}%{_libdir}/*.la
 %{_prefix}/include/*
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/babeltrace.pc
+%{_libdir}/pkgconfig/babeltrace-ctf.pc
 
 %changelog
+* Sat Mar 01 2014 Suchakra Sharma <suchakra@fedoraproject.org> - 1.2.0-1
+- New upstream release
+- Popt patch for babeltrace.pc.in removed. Its fixed in Fedora now
+- Add new file (babeltrace-ctf.pc)
+
 * Mon Aug 05 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 1.1.1-3
 - Remove reference to versionned docdir (#992011)
 
