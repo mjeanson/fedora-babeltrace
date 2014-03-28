@@ -6,7 +6,7 @@ URL:            http://www.efficios.com/babeltrace
 Source0:        http://www.efficios.com/files/%{name}/%{name}-%{version}.tar.bz2
 Group:          Development/Tools
 Summary:        Trace Viewer and Converter, mainly for the Common Trace Format
-BuildRequires:  pkgconfig bison flex glib2-devel popt-devel libuuid-devel libtool
+BuildRequires:  pkgconfig bison flex glib2-devel popt-devel libuuid-devel libtool perl-Test-Harness
 Requires:       lib%{name}%{?_isa} = %{version}-%{release}
 
 %description
@@ -47,7 +47,7 @@ to/from another trace format.
 #Re-run libtoolize and autoreconf to remove rpath
 libtoolize --force --copy
 autoreconf -v --install --force
-%configure --disable-static
+%configure --docdir=%{_docdir}/%{name}-%{version} --disable-static
 
 make %{?_smp_mflags} V=1
 
@@ -80,6 +80,7 @@ rm -vf %{buildroot}%{_libdir}/*.la
 %changelog
 * Thu Mar 27 2014 Yannick Brosseau <yannick.brosseau@gmail.com> - 1.2.1-1
 - New upstream release
+- Revert change for versionned docdir for epel6
 
 * Sat Mar 01 2014 Suchakra Sharma <suchakra@fedoraproject.org> - 1.2.0-1
 - New upstream release
