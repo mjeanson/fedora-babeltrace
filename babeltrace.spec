@@ -1,5 +1,5 @@
 Name:           babeltrace
-Version:        1.2.0
+Version:        1.2.1
 Release:        1%{?dist}
 License:        MIT and GPLv2
 URL:            http://www.efficios.com/babeltrace
@@ -78,6 +78,9 @@ rm -vf %{buildroot}%{_libdir}/*.la
 %{_libdir}/pkgconfig/babeltrace-ctf.pc
 
 %changelog
+* Thu Mar 27 2014 Yannick Brosseau <yannick.brosseau@gmail.com> - 1.2.1-1
+- New upstream release
+
 * Sat Mar 01 2014 Suchakra Sharma <suchakra@fedoraproject.org> - 1.2.0-1
 - New upstream release
 - Popt patch for babeltrace.pc.in removed. Its fixed in Fedora now
