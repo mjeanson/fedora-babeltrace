@@ -1,6 +1,6 @@
 Name:           babeltrace
 Version:        1.2.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        MIT and GPLv2
 URL:            http://www.efficios.com/babeltrace
 Source0:        http://www.efficios.com/files/%{name}/%{name}-%{version}.tar.bz2
@@ -78,6 +78,9 @@ rm -vf %{buildroot}%{_libdir}/*.la
 %{_libdir}/pkgconfig/babeltrace-ctf.pc
 
 %changelog
+* Fri Aug 15 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2.1-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
