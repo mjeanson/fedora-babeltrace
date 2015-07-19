@@ -1,12 +1,20 @@
 Name:           babeltrace
 Version:        1.2.1
-Release:        4%{?dist}
+Release:        5%{?dist}
+Summary:        Trace Viewer and Converter, mainly for the Common Trace Format
 License:        MIT and GPLv2
 URL:            http://www.efficios.com/babeltrace
 Source0:        http://www.efficios.com/files/%{name}/%{name}-%{version}.tar.bz2
 Group:          Development/Tools
-Summary:        Trace Viewer and Converter, mainly for the Common Trace Format
-BuildRequires:  pkgconfig bison flex glib2-devel popt-devel libuuid-devel libtool
+
+BuildRequires:  bison
+BuildRequires:  flex
+BuildRequires:  glib2-devel
+BuildRequires:  libuuid-devel
+BuildRequires:  libtool autoconf automake
+BuildRequires:  popt-devel
+# For check
+BuildRequires:  perl-Test-Harness
 Requires:       lib%{name}%{?_isa} = %{version}-%{release}
 
 %description
@@ -41,7 +49,7 @@ to/from another trace format.
 
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
 
 %build
 #Re-run libtoolize and autoreconf to remove rpath
@@ -56,20 +64,20 @@ make check
 
 %install
 make DESTDIR=%{buildroot} install
-rm -vf %{buildroot}%{_libdir}/*.la
+find %{buildroot} -type f -name "*.la" -delete
 
 %post  -n lib%{name} -p /sbin/ldconfig
 %postun -n lib%{name} -p /sbin/ldconfig
 
 %files
+%doc ChangeLog
 %{_bindir}/%{name}*
-%doc ChangeLog LICENSE gpl-2.0.txt mit-license.txt 
-
 %{_mandir}/man1/*.1*
 
 %files -n lib%{name}
+%{!?_licensedir:%global license %%doc}
+%license LICENSE gpl-2.0.txt mit-license.txt
 %{_libdir}/*.so.*
-%doc ChangeLog LICENSE gpl-2.0.txt mit-license.txt 
 
 %files -n lib%{name}-devel
 %{_prefix}/include/*
@@ -78,6 +86,9 @@ rm -vf %{buildroot}%{_libdir}/*.la
 %{_libdir}/pkgconfig/babeltrace-ctf.pc
 
 %changelog
+* Sun Jul 19 2015 Peter Robinson <pbrobinson@fedoraproject.org> 1.2.1-5
+- Fix FTBFS, use %%license
+
 * Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
