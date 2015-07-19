@@ -1,6 +1,6 @@
 Name:           babeltrace
-Version:        1.2.1
-Release:        5%{?dist}
+Version:        1.2.4
+Release:        1%{?dist}
 Summary:        Trace Viewer and Converter, mainly for the Common Trace Format
 License:        MIT and GPLv2
 URL:            http://www.efficios.com/babeltrace
@@ -86,6 +86,9 @@ find %{buildroot} -type f -name "*.la" -delete
 %{_libdir}/pkgconfig/babeltrace-ctf.pc
 
 %changelog
+* Sun Jul 19 2015 Peter Robinson <pbrobinson@fedoraproject.org> 1.2.4.1
+- Update to 1.2.4
+
 * Sun Jul 19 2015 Peter Robinson <pbrobinson@fedoraproject.org> 1.2.1-5
 - Fix FTBFS, use %%license
 
