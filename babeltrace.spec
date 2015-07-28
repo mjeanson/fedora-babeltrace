@@ -1,18 +1,20 @@
 Name:           babeltrace
 Version:        1.2.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Trace Viewer and Converter, mainly for the Common Trace Format
 License:        MIT and GPLv2
 URL:            http://www.efficios.com/babeltrace
 Source0:        http://www.efficios.com/files/%{name}/%{name}-%{version}.tar.bz2
 Group:          Development/Tools
 
-BuildRequires:  bison
-BuildRequires:  flex
-BuildRequires:  glib2-devel
+BuildRequires:  bison >= 2.4
+BuildRequires:  flex >= 2.5.35
+BuildRequires:  glib2-devel >= 2.22.0
 BuildRequires:  libuuid-devel
-BuildRequires:  libtool autoconf automake
-BuildRequires:  popt-devel
+BuildRequires:  libtool >= 2.2, autoconf, automake
+BuildRequires:  popt-devel >= 1.13
+BuildRequires:  python3-devel
+BuildRequires:  swig >= 2.0
 # For check
 BuildRequires:  perl-Test-Harness
 Requires:       lib%{name}%{?_isa} = %{version}-%{release}
@@ -36,13 +38,23 @@ converter. A plugin can be created for any trace format to allow its conversion
 to/from another trace format.
 
 
-
 %package -n lib%{name}-devel
 Summary:        Common Trace Format Babel Tower
 Group:          Development/Libraries
 Requires:       lib%{name}%{?_isa} = %{version}-%{release} glib2-devel
 
 %description -n lib%{name}-devel
+This project provides trace read and write libraries, as well as a trace
+converter. A plugin can be created for any trace format to allow its conversion
+to/from another trace format.
+
+
+%package -n python3-%{name}
+Summary:        Common Trace Format Babel Tower
+Group:          Development/Libraries
+Requires:       lib%{name}%{?_isa} = %{version}-%{release}
+
+%description -n python3-%{name}
 This project provides trace read and write libraries, as well as a trace
 converter. A plugin can be created for any trace format to allow its conversion
 to/from another trace format.
@@ -55,7 +67,8 @@ to/from another trace format.
 #Re-run libtoolize and autoreconf to remove rpath
 libtoolize --force --copy
 autoreconf -v --install --force
-%configure --disable-static
+export PYTHON=%{__python3}
+%configure --disable-static --enable-python-bindings
 
 make %{?_smp_mflags} V=1
 
@@ -65,16 +78,25 @@ make check
 %install
 make DESTDIR=%{buildroot} install
 find %{buildroot} -type f -name "*.la" -delete
+# Clean installed doc
+rm -f %{buildroot}/%{_pkgdocdir}/API.txt
+rm -f %{buildroot}/%{_pkgdocdir}/LICENSE
+rm -f %{buildroot}/%{_pkgdocdir}/gpl-2.0.txt
+rm -f %{buildroot}/%{_pkgdocdir}/mit-license.txt
+rm -f %{buildroot}/%{_pkgdocdir}/std-ext-lib.txt
 
 %post  -n lib%{name} -p /sbin/ldconfig
 %postun -n lib%{name} -p /sbin/ldconfig
 
 %files
 %doc ChangeLog
+%doc doc/lttng-live.txt
 %{_bindir}/%{name}*
 %{_mandir}/man1/*.1*
 
 %files -n lib%{name}
+%doc doc/API.txt
+%doc std-ext-lib.txt
 %{!?_licensedir:%global license %%doc}
 %license LICENSE gpl-2.0.txt mit-license.txt
 %{_libdir}/*.so.*
@@ -85,7 +107,16 @@ find %{buildroot} -type f -name "*.la" -delete
 %{_libdir}/pkgconfig/babeltrace.pc
 %{_libdir}/pkgconfig/babeltrace-ctf.pc
 
+%files -n python3-%{name}
+%{python3_sitelib}/babeltrace.py
+%{python3_sitelib}/__pycache__/*
+%{python3_sitearch}/
+
+
 %changelog
+* Tue Jul 28 2015 Michael Jeanson <mjeanson@gmail.com> - 1.2.4-2
+- Added python3 bindings module
+
 * Sun Jul 19 2015 Peter Robinson <pbrobinson@fedoraproject.org> 1.2.4.1
 - Update to 1.2.4
 
