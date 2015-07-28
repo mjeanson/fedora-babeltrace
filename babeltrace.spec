@@ -1,3 +1,7 @@
+%global with_python3 1
+
+%{?!_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}}
+
 Name:           babeltrace
 Version:        1.2.4
 Release:        2%{?dist}
@@ -13,8 +17,12 @@ BuildRequires:  glib2-devel >= 2.22.0
 BuildRequires:  libuuid-devel
 BuildRequires:  libtool >= 2.2, autoconf, automake
 BuildRequires:  popt-devel >= 1.13
-BuildRequires:  python3-devel
+
+%if 0%{?with_python3}
+BuildRequires:  python%{python3_pkgversion}-devel
 BuildRequires:  swig >= 2.0
+%endif
+
 # For check
 BuildRequires:  perl-Test-Harness
 Requires:       lib%{name}%{?_isa} = %{version}-%{release}
@@ -49,15 +57,17 @@ converter. A plugin can be created for any trace format to allow its conversion
 to/from another trace format.
 
 
-%package -n python3-%{name}
+%if 0%{?with_python3}
+%package -n python%{python3_pkgversion}-%{name}
 Summary:        Common Trace Format Babel Tower
 Group:          Development/Libraries
 Requires:       lib%{name}%{?_isa} = %{version}-%{release}
 
-%description -n python3-%{name}
+%description -n python%{python3_pkgversion}-%{name}
 This project provides trace read and write libraries, as well as a trace
 converter. A plugin can be created for any trace format to allow its conversion
 to/from another trace format.
+%endif
 
 
 %prep
@@ -79,11 +89,7 @@ make check
 make DESTDIR=%{buildroot} install
 find %{buildroot} -type f -name "*.la" -delete
 # Clean installed doc
-rm -f %{buildroot}/%{_pkgdocdir}/API.txt
-rm -f %{buildroot}/%{_pkgdocdir}/LICENSE
-rm -f %{buildroot}/%{_pkgdocdir}/gpl-2.0.txt
-rm -f %{buildroot}/%{_pkgdocdir}/mit-license.txt
-rm -f %{buildroot}/%{_pkgdocdir}/std-ext-lib.txt
+rm -f %{buildroot}/%{_pkgdocdir}/*
 
 %post  -n lib%{name} -p /sbin/ldconfig
 %postun -n lib%{name} -p /sbin/ldconfig
@@ -107,13 +113,18 @@ rm -f %{buildroot}/%{_pkgdocdir}/std-ext-lib.txt
 %{_libdir}/pkgconfig/babeltrace.pc
 %{_libdir}/pkgconfig/babeltrace-ctf.pc
 
-%files -n python3-%{name}
+%if 0%{?with_python3}
+%files -n python%{python3_pkgversion}-%{name}
 %{python3_sitelib}/babeltrace.py
 %{python3_sitelib}/__pycache__/*
 %{python3_sitearch}/
+%endif
 
 
 %changelog
+* Tue Jul 28 2015 Michael Jeanson <mjeanson@gmail.com> - 1.2.4-3
+- Make the spec file compatible with python3 in EPEL and Fedora
+
 * Tue Jul 28 2015 Michael Jeanson <mjeanson@gmail.com> - 1.2.4-2
 - Added python3 bindings module
 
