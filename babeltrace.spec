@@ -1,6 +1,6 @@
 Name:           babeltrace
 Version:        1.2.4
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Trace Viewer and Converter, mainly for the Common Trace Format
 License:        MIT and GPLv2
 URL:            http://www.efficios.com/babeltrace
@@ -114,6 +114,9 @@ rm -f %{buildroot}/%{_pkgdocdir}/std-ext-lib.txt
 
 
 %changelog
+* Tue Nov 10 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2.4-3
+- Rebuilt for https://fedoraproject.org/wiki/Changes/python3.5
+
 * Tue Jul 28 2015 Michael Jeanson <mjeanson@gmail.com> - 1.2.4-2
 - Added python3 bindings module
 
