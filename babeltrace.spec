@@ -1,10 +1,10 @@
 Name:           babeltrace
-Version:        1.2.4
-Release:        4%{?dist}
+Version:        1.4.0
+Release:        1%{?dist}
 Summary:        Trace Viewer and Converter, mainly for the Common Trace Format
 License:        MIT and GPLv2
-URL:            http://www.efficios.com/babeltrace
-Source0:        http://www.efficios.com/files/%{name}/%{name}-%{version}.tar.bz2
+URL:            https://www.efficios.com/babeltrace
+Source0:        https://www.efficios.com/files/%{name}/%{name}-%{version}.tar.bz2
 Group:          Development/Tools
 
 BuildRequires:  bison >= 2.4
@@ -15,6 +15,7 @@ BuildRequires:  libtool >= 2.2, autoconf, automake
 BuildRequires:  popt-devel >= 1.13
 BuildRequires:  python3-devel
 BuildRequires:  swig >= 2.0
+BuildRequires:  elfutils-devel >= 0.154
 # For check
 BuildRequires:  perl-Test-Harness
 Requires:       lib%{name}%{?_isa} = %{version}-%{release}
@@ -108,12 +109,15 @@ rm -f %{buildroot}/%{_pkgdocdir}/std-ext-lib.txt
 %{_libdir}/pkgconfig/babeltrace-ctf.pc
 
 %files -n python3-%{name}
-%{python3_sitelib}/babeltrace.py
-%{python3_sitelib}/__pycache__/*
+%{python3_sitearch}/babeltrace.py
+%{python3_sitearch}/__pycache__/*
 %{python3_sitearch}/
 
 
 %changelog
+* Tue Jun 21 2016 Michael Jeanson <mjeanson@efficios.com> - 1.4.0-1
+- New upstream release
+
 * Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.4-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
